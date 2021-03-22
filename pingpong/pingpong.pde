@@ -1,8 +1,8 @@
 float Xb, Yb, r, speedX, speedY;    //ball location, size, and speed
 float Xp, Yp, w, h;   //paddle location, wdith and height 
-float Xp2=130, Yp2;
+float Xp2, Yp2;
 boolean isGameOver = false;         // when true, just draw the GameOver message and stop the animation loop to end the game  
-int score = 0;
+int score = 0, score2 = 0;
 
 void setup() {
   size(400, 400);
@@ -48,7 +48,8 @@ void draw() {
     fill(255, 0, 0); 
     textAlign(LEFT);  
     textSize(16);
-    text("Score: " + score, 5, 15);
+    text("Player1: " + score, 5, 390);
+    text("Player2: " + score2, 5, 15);
     //print("yb: "+Yb+"\n");
    // print("r: "+r+"\n");
     // MOVE game elements
@@ -70,20 +71,31 @@ void draw() {
   // System.out.println(r);
   
     //bot paddle
+   // print("\nr: "+r);
     if (Yb > height-r || Yb < r) {
+    //  print("\n"+dist(Xb, Yb, Xp2, Yp2));
+    //  print("\n"+(w+r));
+  //  print("\ndist: "+dist(Xp2, Yp2, Xb, Yb));
+   /// print("\ndist: "+dist(Xb, Yb, Xp2, Yp2));
+     //  / print("\nw+r"+(w+r));
       if (dist(Xb, Yb, Xp, Yp) < w+r) {
-        //incremenet score
+       // println("bot");
+        //incremenet scores
         score++;
         //bounce
         speedY *= -1;
-      } else if (dist(Xb, Yb, Xp2, Yp2) > w+r) {
+        //top paddle
+      } else if (dist(Xb, Yb, Xp2, Yp2) < w+r) {
+        println("top");
+        //print("\ndist: "+dist(Xb, Yb, Xp2, Yp2));
+       // print("\nw+r"+(w+r));
         //print("init");
         //incremenet score
-        score++;
+        score2++;
         //bounce
         speedY *= -1;
       }else {
-        isGameOver = true ;
+        isGameOver = true;
       }
     } else {
       //print("Check collisions"+random(1,100)+"\n");
@@ -96,9 +108,10 @@ void draw() {
     rect(15, 160, 370, 100);
     textSize(30);
     fill(255);
-    text("GAME OVER!", 120, 210);
+    text("GAME OVER!", 120, 190);
     textSize(20);
-    text("Score: "+score, 170, 240);
+    text("Player1: "+score, 170, 220);
+    text("Player2: "+score2, 170, 250);
   }
 }
 void checkCollisions() {
